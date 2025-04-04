@@ -9,3 +9,6 @@ class Manga(models.Model):
     description = models.TextField()
     rating = models.FloatField()
     cover_image = models.URLField()
+
+    def __str__(self):
+        return {{self.title}, self.author, self.description}
