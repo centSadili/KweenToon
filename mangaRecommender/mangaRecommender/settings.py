@@ -37,7 +37,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'manga.apps.MangaConfig'
+    'manga.apps.MangaConfig',
+    'users.apps.UsersConfig'
 ]
 
 MIDDLEWARE = [
