@@ -41,7 +41,8 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest_framework.authtoken',
     'corsheaders',  # Add this line for CORS headers
-    'user'
+    'user',
+    'manga',
 ]
 CORS_ALLOW_ALL_ORIGINS = True
 MIDDLEWARE = [
