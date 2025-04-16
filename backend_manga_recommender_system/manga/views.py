@@ -27,16 +27,20 @@ def search_manga(request):
 
 @api_view(['GET'])
 def get_all_manga(request):
-    url = f'https://api.jikan.moe/v4/manga'
-    params = {'limit': 10}
+    page = request.GET.get('page', 1)  
+    url = 'https://api.jikan.moe/v4/manga'
+    params = {
+        'limit': 25,       
+        'page': page
+    }
+
     try:
-        res = requests.get(url, params=params)
-        res.raise_for_status() 
+        res = requests.get(url, params=params, timeout=5)
+        res.raise_for_status()
         data = res.json().get('data', [])
         return Response(data)
     except requests.exceptions.RequestException as e:
-        return Response({"error": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
-
+        return Response(None, status=status.HTTP_200_OK)  # Fail silently (optional)
 from django.core.cache import cache
 
 @api_view(['GET'])
