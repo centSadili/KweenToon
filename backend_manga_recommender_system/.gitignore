@@ -24,3 +24,7 @@ venv/
 # macOS and system junk
 .DS_Store
 Thumbs.db
+
+# IPython
+profile_default/
+ipython_config.py
