@@ -1,8 +1,12 @@
 #root {
-  max-width: 1280px;
+  width: 100%; 
   margin: 0 auto;
-  padding: 2rem;
-  text-align: center;
+  padding: 0;
+}
+
+body {
+  margin: 0;
+  padding: 0;
 }
 
 .logo {
@@ -16,6 +20,96 @@
 }
 .logo.react:hover {
   filter: drop-shadow(0 0 2em #61dafbaa);
+}
+
+.Signin-Container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  padding: 2rem;
+  width: auto; 
+  transform: translateY(-6vh); 
+
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  align-items: center; 
+  margin-bottom: 2rem;
+  width: 100%;
+  max-width: 700px; 
+}
+
+.form-group label {
+  align-self: flex-start; 
+  margin-bottom: 4px;
+  font-weight: 500;
+}
+
+.form-group input {
+  background-color: white;
+  border: 2px solid #f8f8f8;
+  border-radius: 10px;
+  padding: 10px 14px;
+  width: 100%;
+  box-sizing: border-box;
+  font-size: 1rem;
+  color: black;
+  
+}
+
+.div-design {
+  border: solid 1.5px white;
+  border-radius: 10px;
+  padding: 3rem 10rem; 
+  box-shadow: 0 2px 5px rgba(238, 236, 236, 0.504);
+  transform: scale(1.1);
+  transform-origin: center;
+  width: auto; 
+  max-width: 90vw; 
+}
+
+
+.div-design h2 {
+  font-size: 2rem;
+  margin-bottom: 2rem;
+  color: white;
+  text-align: center; /* Center the "Login" text */
+}
+
+.div-design h6 {
+  text-align: center; 
+}
+
+button {
+  padding: 12px 30px;
+  font-size: 1rem;
+  border-radius: 5px;
+  border: none;
+  background-color: #646cff;
+  color: white;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  margin-top: 1rem;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  min-width: 200px; 
+}
+
+button:hover {
+  background-color: #4e55c4;
+}
+
+.divider {
+  width: 50%; /* or 30%, depending on what you like */
+  height: 2px;
+  background-color: white;
+  border: none;
+  margin: 0 auto 1.5rem auto; /* Centered with bottom space */
 }
 
 @keyframes logo-spin {

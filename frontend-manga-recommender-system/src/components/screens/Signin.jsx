@@ -1,7 +1,20 @@
 import React, { useState } from "react";
 import axios from 'axios';
+import { useNavigate } from "react-router-dom";
+import Header from "../custom/Header";
+
+
 
 const Signin = () => {
+
+  const navigate = useNavigate();
+
+  const Gohome= ()=>{
+    navigate('/home');
+  }
+
+
+
   const [formData, setFormData] = useState({
     username: "",
     password: "",
@@ -14,6 +27,7 @@ const Signin = () => {
       [e.target.name]: e.target.value,
     });
   };
+  
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -35,10 +49,14 @@ const Signin = () => {
     }
   };
   return (
-    <div>
-      <h2>Regiter Account</h2>
+    <div className="Signin-Container">
+      <div className="div-design">
+      <h2>Welcome to KwenToon</h2>
+      <hr className="divider" />
       <form onSubmit={handleSubmit}>
-        <input
+      <div className="form-group">
+      <label >Username</label>
+      <input
           type="text"
           name="username"
           placeholder="Enter username"
@@ -46,7 +64,11 @@ const Signin = () => {
           onChange={handleChange}
           required
         />
-        <input
+      </div>
+      
+      <div className="form-group">
+        <label> Password</label>
+      <input
           type="password"
           name="password"
           placeholder="Enter password"
@@ -54,8 +76,14 @@ const Signin = () => {
           onChange={handleChange}
           required
         />
-        <button type="submit">Submit</button>
+      </div>
+        
+        <button type="submit" onClick={Gohome}>Login</button>
       </form>
+      <h6>Don't have an account? <a href="/register-user">Register</a></h6>
+      </div>
+      
+      
     </div>
   );
 };
