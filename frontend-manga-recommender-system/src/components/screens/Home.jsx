@@ -7,6 +7,7 @@ const Home = () => {
   const [allManga, setManga] = useState([]);
   const [page, setPage] = useState(1);
 
+
   const fetchManga = async (currentPage) => {
     try {
       const response = await axios.get(`http://127.0.0.1:8000/api/manga/?page=${currentPage}`);
@@ -16,28 +17,33 @@ const Home = () => {
     }
   };
 
+
   useEffect(() => {
     fetchManga(page);
   }, [page]);
+
 
   const handleSeeMore = () => {
     setPage((prev) => prev + 1);
   };
 
-  return (
-    <div>
-      <div className="manga-row">
-        {allManga.map((item, index) => (
-          <div key={index} className="manga-wrapper">
-            <MangaCard manga={item} />
-          </div>
-        ))}
-      </div>
 
-      <div className="see-more-container">
-        <button className="see-more-btn" onClick={handleSeeMore}>
-          See More
-        </button>
+  return (
+    <div className="home-wrapper">
+      <div className="main-section">
+        <div className="manga-row">
+          {allManga.map((item, index) => (
+            <div key={index} className="manga-wrapper">
+              <MangaCard manga={item} />
+            </div>
+          ))}
+        </div>
+
+        <div className="see-more-container">
+          <button className="see-more-btn" onClick={handleSeeMore}>
+            See More
+          </button>
+        </div>
       </div>
     </div>
   );

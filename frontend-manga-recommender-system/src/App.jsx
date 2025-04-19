@@ -7,6 +7,7 @@ import Home from "./components/screens/Home";
 import Signin from "./components/screens/Signin";
 import Signup from "./components/screens/Signup";
 import MangaPage from "./components/screens/MangaPage";
+import MainHome from "./components/screens/MainHome";
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
           <Route path="register-user" element={<Signup />} />
           <Route path="home" element={<Home />} />
           <Route path="manga/:mal_id" element={<MangaPage />} />
+          <Route path="MainHome" element={<MainHome />} />
         </Routes>
       </div>
     </BrowserRouter>
