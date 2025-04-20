@@ -8,7 +8,9 @@ const MangaCard = (props) => {
   return (
     <div>
         <div className="card" style={{ width: "18rem" }}>
-            <img src={getManga?.images.jpg.image_url} className="card-img-top" alt={getManga?.title} />
+            <img src={getManga?.images.jpg.image_url} className="card-img-top" alt={getManga?.title} onClick={()=>{
+              window.location.href=`/manga/${getManga?.mal_id}`
+            }}/>
             <div className="card-body">
                 <h5 className="card-title">{getManga?.title}</h5>
             </div>
