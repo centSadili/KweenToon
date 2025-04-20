@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import axios from 'axios';
 import { useNavigate } from "react-router-dom";
 import Header from "../custom/Header";
+import TitleHeader from "../custom/TitleHeader";
 
 
 
@@ -13,6 +14,7 @@ const Signin = () => {
     navigate('/home');
   }
 
+  TitleHeader('Login')
 
 
   const [formData, setFormData] = useState({

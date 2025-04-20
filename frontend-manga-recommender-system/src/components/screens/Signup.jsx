@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import axios from 'axios';
 import '../styles/Signup.css';
+import TitleHeader from "../custom/TitleHeader";
 const Signup = () => {
-
+  TitleHeader('Sign Up')
   const [formData, setFormData] = useState({
     username: "",
     email: "",

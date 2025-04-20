@@ -2,6 +2,7 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import "../styles/MainHome.css";
+import TitleHeader from "../custom/TitleHeader";
 
 const mainGenreMap = {
   "Action": 1,
@@ -31,6 +32,8 @@ const explicitGenreMap = {
 };
 
 const MainHome = () => {
+
+  TitleHeader('Home')
   const [topManga, setTopManga] = useState([]);
   const [topPage, setTopPage] = useState(1);
 
