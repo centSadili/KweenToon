@@ -198,9 +198,9 @@ const MangaPage = () => {
             </span>
           )}
         </p>
-          <p>
+          <p >
             Anime:{" "}
-            <a href={getManga?.url} target="_blank" rel="noopener noreferrer">
+            <a style={{ fontWeight: "bold",fontStyle:'italic' }} href={getManga?.url} target="_blank" rel="noopener noreferrer">
             {getManga?.title}
             </a>
           </p>
@@ -208,7 +208,7 @@ const MangaPage = () => {
   Genres:{" "}
   {getManga?.genres?.length > 0 ? (
     getManga.genres.map((genre, index) => (
-      <span key={index} style={{ color: "violet", fontWeight: "bold" }}>
+      <span key={index} style={{ fontWeight: "bold",fontStyle:'italic'  }}>
         {genre.name}
         {index < getManga.genres.length - 1 && ", "}
       </span>
@@ -224,7 +224,7 @@ const MangaPage = () => {
   Themes:{" "}
   {getManga?.themes?.length > 0 ? (
     getManga.themes.map((theme, index) => (
-      <span key={index} style={{ color: "lime", fontWeight: "bold" }}>
+      <span key={index} style={{ fontWeight: "bold",fontStyle:'italic'  }}>
         {theme.name}
         {index < getManga.themes.length - 1 && ", "}
       </span>
@@ -298,7 +298,7 @@ const MangaPage = () => {
           <h3>More Like This</h3>
           <div className="reco-grid">
           <div className="manga-row">
-  {allManga.slice(0, 6).map((item, index) => (
+  {allManga.slice(0, 5).map((item, index) => (
     <div key={index} className="manga-wrapper">
       <MangaCard manga={item} />
     </div>
