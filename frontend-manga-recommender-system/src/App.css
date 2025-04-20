@@ -112,6 +112,138 @@ button:hover {
   margin: 0 auto 1.5rem auto; /* Centered with bottom space */
 }
 
+/* Manga Page Style*/
+.manga-page {
+  display: flex;
+  flex-direction: row;
+  gap: 2rem;
+  padding: 4rem 6rem;
+  align-items: flex-start;
+  flex-wrap: wrap; /* for responsiveness */
+  text-align: justify;
+  font-weight: bold;
+}
+
+.manga-page h1 {
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+  
+}
+.manga-page span {
+  font-size: 1rem;
+  margin-bottom: 1rem;
+}
+
+.left-container {
+  flex: 1.5;
+  min-width: 350px;
+  max-width: 500px;
+  font-weight: bold;
+  font-size: 1.1rem; /* Makes text larger */
+  padding: 1rem;      /* Adds breathing room */
+  gap: 0.8rem;        /* Adds spacing if using flex/column */
+}
+
+.left-container p {
+  margin-bottom: 0.75rem;
+  line-height: 1.5;
+  font-size: 1.1rem;
+}
+
+.left-container img {
+  width: 100%;
+  height: auto;
+  border-radius: 8px;
+  margin-bottom: 1rem;
+}
+
+.left-container p span.author {
+  color: #66ccff;         
+  font-weight: bold;      
+}
+
+.right-container {
+  flex: 2;
+  min-width: 300px;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem; 
+  
+}
+
+.right-container h1 {
+  margin-top: 0;
+}
+
+.right-container p {
+  margin: 0; 
+}
+
+.manga-info-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+  margin-top: 1.5rem;
+  font-size: 1.1rem;
+  line-height: 1.6;
+  background-color: #3a3a3a; 
+  padding: 1rem;
+  border-radius: 8px;
+  color: #ffffff;           
+  box-shadow: 0 2px 5px rgba(238, 236, 236, 0.2);
+  border-left: 4px solid #cdcdcd;
+}
+
+.manga-info-grid p span.genre {
+  color: #00bfff;         /* Light blue for genres */
+  font-weight: bold;      /* Makes genres stand out */
+}
+
+.manga-info-grid p span.theme {
+  color: #ff6347;         /* Tomato red for themes */
+  font-weight: bold;      /* Makes themes stand out */
+}
+
+
+.manga-info-grid p {
+  margin: 0;
+  font-weight: 500;
+  color: #f0f0f0;
+}
+
+
+.synopsis-container {
+  font-size: 1.1rem;
+  line-height: 1.8;
+  margin: 1.5rem 0;
+  padding: 1rem;
+  background-color: #4f4f4f;
+  border-left: 4px solid #cdcdcd;
+  box-shadow: 0 2px 5px rgba(238, 236, 236, 0.504);
+  border-radius: 8px;
+  color: #ffffff;
+}
+
+.synopsis-container p {
+  margin: 0;
+  white-space: pre-wrap;
+  font-weight: 600;
+}
+
+.background-container {
+  font-size: 1.1rem;
+  line-height: 1.8;
+  margin: 1.5rem 0;
+  padding: 1rem;
+  background-color: #393737;           /* Darker than synopsis/grid */
+  border-left: 4px solid #cdcdcd;
+  border-radius: 8px;
+  color: #ffffff;
+  box-shadow: 0 2px 5px rgba(238, 236, 236, 0.15);
+}
+
+
+
 @keyframes logo-spin {
   from {
     transform: rotate(0deg);
