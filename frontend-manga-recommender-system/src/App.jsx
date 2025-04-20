@@ -9,6 +9,7 @@ import Signup from "./components/screens/Signup";
 import MangaPage from "./components/screens/MangaPage";
 import MainHome from "./components/screens/MainHome";
 import Profile from "./components/screens/Profile";
+import Footer from "./components/custom/Footer";
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
           <Route path="MainHome" element={<MainHome />} />
           <Route path="profile" element={<Profile />} />
         </Routes>
+        <Footer />
       </div>
     </BrowserRouter>
   );
