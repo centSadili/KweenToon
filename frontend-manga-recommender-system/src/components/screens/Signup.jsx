@@ -33,6 +33,7 @@ const Signup = () => {
       );
       setResponse(res.data);
       alert("User created successfully!");
+      window.location.href = "/"
     } catch (error) {
       console.error(error);
       alert("Error creating user.");

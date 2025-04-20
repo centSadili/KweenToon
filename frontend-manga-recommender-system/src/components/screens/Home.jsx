@@ -2,8 +2,10 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import MangaCard from "../custom/MangaCard";
 import "../styles/Home.css";
+import TitleHeader from "../custom/TitleHeader";
 
 const Home = () => {
+  TitleHeader("Home")
   const [allManga, setManga] = useState([]);
   const [page, setPage] = useState(1);
 

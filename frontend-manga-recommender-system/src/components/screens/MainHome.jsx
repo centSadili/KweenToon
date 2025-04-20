@@ -32,8 +32,7 @@ const explicitGenreMap = {
 };
 
 const MainHome = () => {
-
-  TitleHeader('Home')
+  TitleHeader('Home');
   const [topManga, setTopManga] = useState([]);
   const [topPage, setTopPage] = useState(1);
 
@@ -99,7 +98,6 @@ const MainHome = () => {
       fetchManga(1, genreId);
     }
   };
-
   useEffect(() => {
     const genreId = selectedGenre
       ? mainGenreMap[selectedGenre] || explicitGenreMap[selectedGenre]

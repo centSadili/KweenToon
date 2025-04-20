@@ -8,6 +8,7 @@ import Signin from "./components/screens/Signin";
 import Signup from "./components/screens/Signup";
 import MangaPage from "./components/screens/MangaPage";
 import MainHome from "./components/screens/MainHome";
+import Profile from "./components/screens/Profile";
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
           <Route path="home" element={<Home />} />
           <Route path="manga/:mal_id" element={<MangaPage />} />
           <Route path="MainHome" element={<MainHome />} />
+          <Route path="profile" element={<Profile />} />
         </Routes>
       </div>
     </BrowserRouter>
