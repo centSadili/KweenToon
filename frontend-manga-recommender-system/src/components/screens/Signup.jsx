@@ -1,7 +1,9 @@
 import React, { useState } from "react";
 import axios from 'axios';
+import '../styles/Signup.css';
+import TitleHeader from "../custom/TitleHeader";
 const Signup = () => {
-
+  TitleHeader('Sign Up')
   const [formData, setFormData] = useState({
     username: "",
     email: "",
@@ -31,43 +33,47 @@ const Signup = () => {
       );
       setResponse(res.data);
       alert("User created successfully!");
+      window.location.href = "/"
     } catch (error) {
       console.error(error);
       alert("Error creating user.");
     }
   };
   return (
-    <div>
-      <h2>Regiter Account</h2>
-      <form onSubmit={handleSubmit}>
-        <input
-          type="text"
-          name="username"
-          placeholder="Enter username"
-          value={formData.username}
-          onChange={handleChange}
-          required
-        />
-        <input
-          type="text"
-          name="email"
-          placeholder="Enter email"
-          value={formData.email}
-          onChange={handleChange}
-          required
-        />
-        <input
-          type="password"
-          name="password"
-          placeholder="Enter password"
-          value={formData.password}
-          onChange={handleChange}
-          required
-        />
-        <button type="submit">Submit</button>
-      </form>
+    <div className="signup-container">
+      <div className="signup-box">
+        <h2>Sign Up Page</h2>
+        <form onSubmit={handleSubmit}>
+          <input
+            type="text"
+            name="email"
+            placeholder="Enter email"
+            value={formData.email}
+            onChange={handleChange}
+            required
+          />
+          <input
+            type="password"
+            name="password"
+            placeholder="Enter password"
+            value={formData.password}
+            onChange={handleChange}
+            required
+          />
+          <input
+            type="text"
+            name="username"
+            placeholder="Enter username"
+            value={formData.username}
+            onChange={handleChange}
+            required
+          />
+          <button type="submit">Sign Up</button>
+        </form>
+        <p>Already have an account? <a href="/">Sign in here!</a></p>
+      </div>
     </div>
-  );
+  );  
 };
 
 export default Signup;

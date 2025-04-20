@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'corsheaders',  # Add this line for CORS headers
     'user',
     'manga',
+    'history',
 ]
 CORS_ALLOW_ALL_ORIGINS = True
 MIDDLEWARE = [

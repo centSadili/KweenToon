@@ -1,0 +1,71 @@
+/* Signup.css */
+
+body {
+    margin: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #1e1e1e;
+    color: white;
+  }
+  
+  .signup-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+  }
+  
+  .signup-box {
+    background-color: #2c2c2c;
+    padding: 2rem;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
+    width: 350px;
+    border: 1px solid #444;
+  }
+  
+  .signup-box h2 {
+    text-align: center;
+    margin-bottom: 1.5rem;
+  }
+  
+  .signup-box form {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .signup-box input {
+    padding: 10px;
+    margin-bottom: 1rem;
+    border-radius: 5px;
+    border: 1px solid #999;
+    background-color: #f5f1f1;
+    color: black;
+  }
+  
+  .signup-box button {
+    padding: 10px;
+    background-color: #6c63ff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: background-color 0.3s ease;
+  }
+  
+  .signup-box button:hover {
+    background-color: #554cd4;
+  }
+  
+  .signup-box p {
+    text-align: center;
+    margin-top: 1rem;
+    font-size: 0.9rem;
+  }
+  
+  .signup-box a {
+    color: #6c63ff;
+    text-decoration: none;
+  }
+  

@@ -2,10 +2,13 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import MangaCard from "../custom/MangaCard";
 import "../styles/Home.css";
+import TitleHeader from "../custom/TitleHeader";
 
 const Home = () => {
+  TitleHeader("Home")
   const [allManga, setManga] = useState([]);
   const [page, setPage] = useState(1);
+
 
   const fetchManga = async (currentPage) => {
     try {
@@ -16,28 +19,33 @@ const Home = () => {
     }
   };
 
+
   useEffect(() => {
     fetchManga(page);
   }, [page]);
+
 
   const handleSeeMore = () => {
     setPage((prev) => prev + 1);
   };
 
-  return (
-    <div>
-      <div className="manga-row">
-        {allManga.map((item, index) => (
-          <div key={index} className="manga-wrapper">
-            <MangaCard manga={item} />
-          </div>
-        ))}
-      </div>
 
-      <div className="see-more-container">
-        <button className="see-more-btn" onClick={handleSeeMore}>
-          See More
-        </button>
+  return (
+    <div className="home-wrapper">
+      <div className="main-section">
+        <div className="manga-row">
+          {allManga.map((item, index) => (
+            <div key={index} className="manga-wrapper">
+              <MangaCard manga={item} />
+            </div>
+          ))}
+        </div>
+
+        <div className="see-more-container">
+          <button className="see-more-btn" onClick={handleSeeMore}>
+            See More
+          </button>
+        </div>
       </div>
     </div>
   );
