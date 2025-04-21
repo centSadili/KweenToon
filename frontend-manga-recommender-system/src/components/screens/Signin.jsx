@@ -11,7 +11,7 @@ const Signin = () => {
   const navigate = useNavigate();
 
   const Gohome= ()=>{
-    navigate('/home');
+    navigate('/MainHome');
   }
 
   TitleHeader('Login')
