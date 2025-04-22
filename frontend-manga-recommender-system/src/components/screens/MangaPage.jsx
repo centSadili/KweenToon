@@ -32,7 +32,7 @@ const MangaPage = () => {
       .catch((error) => {
         console.error("Failed to fetch manga:", error);
       });
-  }, [mal_id]); // Only runs when mal_id changes
+  }, [mal_id]); 
 
   return (
     <div className="manga-page">
@@ -98,6 +98,7 @@ const MangaPage = () => {
           </span>
         )}
       </p>
+      
       <p>
   Serializations:{" "}
   {getManga?.serializations?.length > 0 ? (
@@ -116,13 +117,23 @@ const MangaPage = () => {
 
 
       <div className="right-container">
-        <div>
-        <h1>"{getManga?.title_japanese}" </h1>
-        <h4>Englist Title: {getManga?.title}</h4> 
 
+         <div className="upper-container">
+      <div className="left-section">
+        <h1>{getManga?.title_japanese}</h1>
+        <h4>English Title: {getManga?.title}</h4> 
         <p>Score: {"⭐".repeat(Math.round(getManga?.score || 0))} ({getManga?.score})</p>
-
+      </div>
+      <div className="right-section">
+        <div className="action-icons-container">
+          <span className="material-symbols-outlined action-icon" >favorite</span>
+          <span className="material-symbols-outlined action-icon playlist">playlist_add</span>
         </div>
+      </div>
+    </div>
+        
+
+
         <div className="manga-info-grid">
         <p>
   Status:{" "}
