@@ -27,7 +27,7 @@ const Header = () => {
                     <div className="nav-links">
                         <ul className="nav-list">
                             <li className="nav-item">
-                                <a className="nav-link active"  href="home" onClick={Gohome}>Home</a>
+                                <a className="nav-link active"  href="MainHome" onClick={Gohome}>Home</a>
                             </li>
                             <li className="nav-item">
                                 <a className="nav-link" href="#">Popular</a>
