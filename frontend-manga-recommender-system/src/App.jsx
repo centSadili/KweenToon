@@ -1,5 +1,6 @@
 import React from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { useEffect, useState } from "react";
 import "./App.css";
 import Header from "./components/custom/Header";
 
@@ -12,6 +13,26 @@ import Profile from "./components/screens/Profile";
 import Footer from "./components/custom/Footer";
 
 function App() {
+
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    
+    const timer = setTimeout(() => {
+      setIsLoading(false);
+    }, 1000); 
+
+    return () => clearTimeout(timer); 
+  }, []);
+
+  
+  if (isLoading) {
+    return (
+      <div className="loading-placeholder">
+        <div className="spinner"></div>
+      </div>
+    );
+  }
   return (
     <BrowserRouter>
       <div className="App">
