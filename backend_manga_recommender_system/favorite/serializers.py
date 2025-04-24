@@ -1,9 +1,9 @@
 from rest_framework import serializers
-from .models import History
+from .models import Favorite
 
 class FavoriteSerializer(serializers.ModelSerializer):
     class Meta:
-        model = History
+        model = Favorite
         fields = [
             'history_id',
             'user_id',

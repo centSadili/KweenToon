@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'user',
     'manga',
     'history',
+    'favorite',
 ]
 CORS_ALLOW_ALL_ORIGINS = True
 MIDDLEWARE = [
