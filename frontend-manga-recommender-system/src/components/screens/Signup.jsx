@@ -53,18 +53,18 @@ const Signup = () => {
             required
           />
           <input
-            type="password"
-            name="password"
-            placeholder="Enter password"
-            value={formData.password}
-            onChange={handleChange}
-            required
-          />
-          <input
             type="text"
             name="username"
             placeholder="Enter username"
             value={formData.username}
+            onChange={handleChange}
+            required
+          />
+          <input
+            type="password"
+            name="password"
+            placeholder="Enter password"
+            value={formData.password}
             onChange={handleChange}
             required
           />

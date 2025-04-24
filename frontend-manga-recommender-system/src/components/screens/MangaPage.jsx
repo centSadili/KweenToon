@@ -3,12 +3,15 @@ import { useParams } from "react-router-dom";
 import React, { useEffect, useState } from "react";
 import MangaCard from "../custom/MangaCard";
 import "../styles/MangaPage.css";
+import { useRef } from "react";
 
 const MangaPage = () => {
   const { mal_id } = useParams();
   const [getManga, setManga] = useState({});
   const [allManga, setAllManga] = useState([]);
   const [page, setPage] = useState(1);
+  const favoriteButtonRef = useRef(null); // Create a ref for the button
+
   const [user] = useState(() => {
     const storedUser = localStorage.getItem("user");
     return storedUser ? JSON.parse(storedUser) : null;
@@ -46,9 +49,17 @@ const MangaPage = () => {
   const addMangaFavorite = async () => {
     if (!user || !user.id) {
       console.warn("User is not logged in or user ID is missing.");
+      alert("Please log in to add to favorites.");
       return;
     }
+
+    // Disable the button using the ref
+    if (favoriteButtonRef.current) {
+      favoriteButtonRef.current.disabled = true;
+    }
+
     try {
+      // Send the request to add the manga to favorites
       const response = await axios.post(
         `http://127.0.0.1:8000/api/favorite/`,
         { user_id: user.id, mal_id: mal_id },
@@ -58,11 +69,35 @@ const MangaPage = () => {
           },
         }
       );
-      console.log("Manga favorite added:", response.data);
+
+      console.log("API response:", response); // Log full response for debugging
+
+      // Check if the response contains the favorite_id to confirm success
+      if (response.status === 200 && response.data.favorite_id) {
+        // If the favorite_id is present, proceed with the state update
+        alert("Manga added to favorites!");
+
+        // Update state or list with the added favorite (assumes response.data contains the added manga)
+        setAllManga((prevManga) => [
+          ...prevManga,
+          response.data, // Add the new favorite manga (response.data is the full data returned)
+        ]);
+      } else {
+        console.error("API did not return expected data:", response.data);
+        alert("Failed to add manga to favorites.");
+      }
+
     } catch (error) {
       console.error("Error adding manga favorite:", error);
+      alert("There was an issue adding this manga to favorites.");
+    } finally {
+      // Re-enable the button using the ref
+      if (favoriteButtonRef.current) {
+        favoriteButtonRef.current.disabled = false;
+      }
     }
   };
+  
   useEffect(() => {
     fetchManga(page);
   }, [page]);
@@ -171,10 +206,22 @@ const MangaPage = () => {
         <p>Score: {"⭐".repeat(Math.round(getManga?.score || 0))} ({getManga?.score})</p>
       </div>
       <div className="right-section">
-        <div className="action-icons-container">
-          <span className="material-symbols-outlined action-icon" >favorite</span>
-          <span className="material-symbols-outlined action-icon playlist">playlist_add</span>
-        </div>
+      <div className="action-icons-container">
+            <span
+              className="material-symbols-outlined action-icon"
+              onClick={addMangaFavorite} // Trigger function for adding to favorites
+            >
+              favorite
+            </span>
+            <span
+              className="material-symbols-outlined action-icon playlist"
+              onClick={addMangaHistory} // Trigger function for adding to playlist (history)
+            >
+              playlist_add
+            </span>
+            <button ref={favoriteButtonRef} onClick={addMangaFavorite}>Add to Favorites</button>
+
+          </div>
       </div>
     </div>
         

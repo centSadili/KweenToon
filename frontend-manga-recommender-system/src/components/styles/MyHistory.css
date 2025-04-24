@@ -1,0 +1,119 @@
+.mylist-container {
+    min-height: 100vh; /* or at least 60vh */
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .mylist-loader {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh; /* this is KEY */
+    width: 100%; /* make sure it stretches full width */
+    text-align: center;
+    color: #555;
+  }
+  
+  
+  .spinner {
+    width: 50px;
+    height: 50px;
+    border: 6px solid #ccc;
+    border-top-color: #007BFF;
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+    margin-bottom: 10px;
+  }
+  
+  @keyframes spin {
+    to {
+      transform: rotate(360deg);
+    }
+  }
+  
+  .empty-mylist {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 60vh; /* Adjust based on your layout */
+    color: #666;
+    text-align: center;
+  }
+  
+  .empty-image {
+    width: 180px;
+    margin-bottom: 1rem;
+    opacity: 0.8;
+  }
+  
+  .mylist-content {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+  }
+  
+  .mylist-item {
+    border: 1px solid #ddd;
+    padding: 1rem;
+    border-radius: 8px;
+    background: #fafafa;
+    width: 200px;
+  }
+  
+  .spinner {
+    width: 50px;
+    height: 50px;
+    border: 6px solid #ccc;
+    border-top-color: #007BFF;
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+    margin-bottom: 10px;
+  }
+
+  .mylist-item-row {
+    display: flex;
+    align-items: center;
+    background-color: #f8f8f8;
+    padding: 15px;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    width: 100%;
+    max-width: 800px;
+    margin: 0 auto;
+  }
+  
+  .mylist-img {
+    width: 100px;
+    height: auto;
+    border-radius: 5px;
+    margin-right: 20px;
+  }
+  
+  .mylist-details h3 {
+    margin: 0;
+    font-size: 18px;
+    color: #333;
+  }
+  
+  
+  @keyframes spin {
+    to {
+      transform: rotate(360deg);
+    }
+  }
+
+  @media (max-width: 600px) {
+    .mylist-item-row {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+  
+    .mylist-img {
+      margin: 0 0 10px 0;
+      width: 100%;
+      max-width: 100%;
+    }
+  }

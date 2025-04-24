@@ -104,7 +104,7 @@ const Header = () => {
                 <a className="nav-link ">Completed</a>
               </li>
               <li className="nav-item">
-                <a className="nav-link" href="#">
+                <a className="nav-link" href="/mylist">
                   MyList
                 </a>
               </li>
@@ -158,6 +158,17 @@ const Header = () => {
                   </span>
                   <span>Check Profile</span>
                 </div>
+
+                <div
+                  className="dropdown-item"
+                  onClick={() => handleNavigate("/myhistory")}
+                >
+                  <span className="material-symbols-outlined">
+                      history
+                    </span>
+                  <span>Check History</span>
+                </div>
+                
                 <div className="dropdown-item" onClick={() => handleLogout()}>
                   <span className="material-symbols-outlined">logout</span>
                   <span>{user === null ? "Login" : "Logout"}</span>
