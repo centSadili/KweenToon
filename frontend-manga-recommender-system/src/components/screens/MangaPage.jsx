@@ -2,6 +2,7 @@ import axios from "axios";
 import { useParams } from "react-router-dom";
 import React, { useEffect, useState } from "react";
 import MangaCard from "../custom/MangaCard";
+import '../styles/MangaPage.css'
 
 const MangaPage = () => {
   const { mal_id } = useParams();
@@ -32,7 +33,7 @@ const MangaPage = () => {
       .catch((error) => {
         console.error("Failed to fetch manga:", error);
       });
-  }, [mal_id]); 
+  }, [mal_id]); // Only runs when mal_id changes
 
   return (
     <div className="manga-page">
@@ -98,7 +99,6 @@ const MangaPage = () => {
           </span>
         )}
       </p>
-      
       <p>
   Serializations:{" "}
   {getManga?.serializations?.length > 0 ? (
@@ -117,23 +117,13 @@ const MangaPage = () => {
 
 
       <div className="right-container">
+        <div>
+        <h1>"{getManga?.title_japanese}" </h1>
+        <h4>Englist Title: {getManga?.title}</h4> 
 
-         <div className="upper-container">
-      <div className="left-section">
-        <h1>{getManga?.title_japanese}</h1>
-        <h4>English Title: {getManga?.title}</h4> 
         <p>Score: {"⭐".repeat(Math.round(getManga?.score || 0))} ({getManga?.score})</p>
-      </div>
-      <div className="right-section">
-        <div className="action-icons-container">
-          <span className="material-symbols-outlined action-icon" >favorite</span>
-          <span className="material-symbols-outlined action-icon playlist">playlist_add</span>
+
         </div>
-      </div>
-    </div>
-        
-
-
         <div className="manga-info-grid">
         <p>
   Status:{" "}
@@ -305,18 +295,18 @@ const MangaPage = () => {
         
         
 
-        <div className="reco-container">
-          <h3>More Like This</h3>
-          <div className="reco-grid">
-          <div className="manga-row">
-  {allManga.slice(0, 5).map((item, index) => (
-    <div key={index} className="manga-wrapper">
-      <MangaCard manga={item} />
-    </div>
-  ))}
-</div>
-          </div>
+<div className="reco-container">
+  <h3>More Like This</h3>
+  <div className="reco-grid">
+    <div className="manga-row">
+      {allManga.slice(0, 6).map((item, index) => (
+        <div key={index} className="manga-wrapper">
+          <MangaCard manga={item} />
         </div>
+      ))}
+    </div>
+  </div>
+</div>
 
       </div>
     </div>
