@@ -3,11 +3,15 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import Header from "../custom/Header";
 import TitleHeader from "../custom/TitleHeader";
+import { useAuth } from "../../context/AuthContext";
 
 const Signin = () => {
   const navigate = useNavigate();
+  const { setUser, setIsLoggedIn } = useAuth();
 
-
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
   TitleHeader("Login");
 
   const [formData, setFormData] = useState({
@@ -35,13 +39,24 @@ const Signin = () => {
           },
         }
       );
-      setResponse(res.data);
-      console.log(res);
+  
+      const data = res.data; // ✅ Extract the response data
+      console.log("Response data:", data);
+      setUser(data.user);
+      console.log("User found in localStorage:", data.user);
+      setIsLoggedIn(true);
+      localStorage.setItem("user", JSON.stringify(data.user));
+      console.log("User found in localStorage:",localStorage.getItem("user"))
+      localStorage.setItem("token", data.token);
+      console.log("Token found in localStorage:", data.token);
+  
+      setResponse(data);
+      console.log(data);
       navigate("/MainHome");
       alert("User Login successfully!");
     } catch (error) {
       console.error(error);
-      alert("Error creating user.");
+      alert("Invalid credentials or server error.");
     }
   };
   return (
@@ -74,9 +89,7 @@ const Signin = () => {
             />
           </div>
 
-          <button type="submit">
-            Login
-          </button>
+          <button type="submit">Login</button>
         </form>
         <h6>
           Don't have an account? <a href="/register-user">Register</a>

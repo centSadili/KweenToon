@@ -1,9 +1,11 @@
-import React from 'react'
+import React, { useState } from 'react'
 import TitleHeader from '../custom/TitleHeader'
 import "../styles/Profile.css"
 
 const Profile = () => {
     TitleHeader("Profile")
+    const [user] = useState(JSON.parse(localStorage.getItem("user")));
+    console.log("User found in localStorage:", user);
   return (
     <div className='container'>
       <div className='side-container'>
@@ -12,7 +14,8 @@ const Profile = () => {
         <div>
             <img src={null} alt="Profile Picture" />
         </div>
-        <h2>Username</h2>
+        <h1>{user.username}</h1>
+        <h3>{user.email}</h3>
         <div>
             <h2>Description:</h2>
             <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. 

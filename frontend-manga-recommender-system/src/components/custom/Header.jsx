@@ -3,6 +3,7 @@ import '../styles/Header.css';
 import {useLocation, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import MangaSearchBar from './MangaSearchBAr';
+import { useAuth } from '../../context/AuthContext';
 
 
 
@@ -15,7 +16,19 @@ const Header = () => {
     const [results, setResults] = useState([]);
     const [showDropdown, setShowDropdown] = useState(false);
     const [loading, setLoading] = useState(false);
+    const { setUser, setIsLoggedIn } = useAuth();
+    const handleLogout = () => {
+        // Clear auth context
+        setUser(null);
+        setIsLoggedIn(false);
     
+        // Clear local storage
+        localStorage.removeItem("user");
+        localStorage.removeItem("token");
+    
+        // Redirect to login
+        navigate("/");
+      };
     const location = useLocation();
 
     const isDisabled = location.pathname === '/';
@@ -138,7 +151,7 @@ const Header = () => {
                                 <span className="material-symbols-outlined">account_circle</span>
                                 <span>Check Profile</span>
                             </div>
-                            <div className="dropdown-item" onClick={() => handleNavigate('/')}>
+                            <div className="dropdown-item" onClick={() => handleLogout()}>
                                 <span className="material-symbols-outlined">logout</span>
                                 <span>Logout</span>
                             </div>
