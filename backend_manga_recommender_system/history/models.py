@@ -7,7 +7,6 @@ class History(models.Model):
     user_id = models.ForeignKey('user.User', on_delete=models.CASCADE, related_name="+")
     mal_id = models.CharField(max_length=100, default='')
     date = models.DateTimeField(auto_now_add=True)
-    rating = models.FloatField(default=0)
     
 
     def __str__(self):
