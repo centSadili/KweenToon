@@ -9,7 +9,10 @@ const MangaPage = () => {
   const [getManga, setManga] = useState({});
   const [allManga, setAllManga] = useState([]);
   const [page, setPage] = useState(1);
-
+  const [user] = useState(() => {
+    const storedUser = localStorage.getItem("user");
+    return storedUser ? JSON.parse(storedUser) : null;
+  });
   const fetchManga = async (currentPage) => {
     try {
       const response = await axios.get(`http://127.0.0.1:8000/api/manga/?page=${currentPage}`);
@@ -18,7 +21,22 @@ const MangaPage = () => {
       console.error("Error fetching manga:", error);
     }
   };
-
+  const addMangaHistory = async () => {
+    if (!user || !user.id) {
+      console.warn("User is not logged in or user ID is missing.");
+      return;
+    }
+    try {
+      const response = await axios.post(`http://127.0.0.1:8000/api/history/`, { user_id: user.id, mal_id: mal_id }, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      console.log("Manga history added:", response.data);
+    } catch (error) {
+      console.error("Error adding manga history:", error);
+    }
+  };
   useEffect(() => {
     fetchManga(page);
   }, [page]);
@@ -28,6 +46,7 @@ const MangaPage = () => {
       .get(`http://127.0.0.1:8000/api/manga/getbyid/?id=${mal_id}`)
       .then((response) => {
         setManga(response.data);
+        addMangaHistory();
         console.log(response.data);
       })
       .catch((error) => {
