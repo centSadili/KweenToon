@@ -29,8 +29,8 @@ const Profile = () => {
         <div>
           <img src={null} alt="Profile Picture" />
         </div>
-        <h1>{user.username}</h1>
-        <h3>{user.email}</h3>
+        <h1>Username: {user.username}</h1>
+        <h3>Email: {user.email}</h3>
         <div>
           <h2>Description:</h2>
           <p>Lorem ipsum dolor sit amet consectetur adipisicing elit...</p>
