@@ -97,11 +97,8 @@ const Header = () => {
               </li>
               <li className="nav-item">
                 <a className="nav-link" href="#">
-                  Popular
+                  Completed
                 </a>
-              </li>
-              <li className="nav-item">
-                <a className="nav-link ">Completed</a>
               </li>
               <li className="nav-item">
                 <a className="nav-link" href="/mylist">

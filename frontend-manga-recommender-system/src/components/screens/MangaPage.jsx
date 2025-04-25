@@ -11,6 +11,7 @@ const MangaPage = () => {
   const [allManga, setAllManga] = useState([]);
   const [page, setPage] = useState(1);
   const favoriteButtonRef = useRef(null); // Create a ref for the button
+  const hasAddedToHistory = useRef(false);
 
   const [user] = useState(() => {
     const storedUser = localStorage.getItem("user");
@@ -99,21 +100,22 @@ const MangaPage = () => {
   };
   
   useEffect(() => {
-    fetchManga(page);
-  }, [page]);
-
-  useEffect(() => {
     axios
       .get(`http://127.0.0.1:8000/api/manga/getbyid/?id=${mal_id}`)
       .then((response) => {
         setManga(response.data);
-        addMangaHistory();
+  
+        if (!hasAddedToHistory.current) {
+          addMangaHistory();
+          hasAddedToHistory.current = true;
+        }
+  
         console.log(response.data);
       })
       .catch((error) => {
         console.error("Failed to fetch manga:", error);
       });
-  }, [mal_id]); // Only runs when mal_id changes
+  }, [mal_id]);
 
   return (
     <div className="manga-page">
@@ -215,7 +217,7 @@ const MangaPage = () => {
             </span>
             <span
               className="material-symbols-outlined action-icon playlist"
-              onClick={addMangaHistory} // Trigger function for adding to playlist (history)
+              onClick={addMangaFavorite} // Trigger function for adding to playlist (history)
             >
               playlist_add
             </span>
