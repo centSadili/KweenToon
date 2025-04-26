@@ -9,7 +9,7 @@ const MangaPage = () => {
   const { mal_id } = useParams();
   const [getManga, setManga] = useState({});
   const [allManga, setAllManga] = useState([]);
-  const [page, setPage] = useState(1);
+   const [page, setPage] = useState(1);
   const favoriteButtonRef = useRef(null); // Create a ref for the button
   const hasAddedToHistory = useRef(false);
 
@@ -27,6 +27,11 @@ const MangaPage = () => {
       console.error("Error fetching manga:", error);
     }
   };
+
+    useEffect(() => {
+      fetchManga(page);
+    }, [page]);
+  
   const addMangaHistory = async () => {
     if (!user || !user.id) {
       console.warn("User is not logged in or user ID is missing.");
@@ -116,6 +121,7 @@ const MangaPage = () => {
         console.error("Failed to fetch manga:", error);
       });
   }, [mal_id]);
+  
 
   return (
     <div className="manga-page">
@@ -417,13 +423,13 @@ const MangaPage = () => {
         <div className="reco-container">
           <h3>More Like This</h3>
           <div className="reco-grid">
-            <div className="manga-row">
-              {allManga.slice(0, 6).map((item, index) => (
-                <div key={index} className="manga-wrapper">
-                  <MangaCard manga={item} />
-                </div>
-              ))}
-            </div>
+          <div className="manga-row">
+            {allManga.slice(0, 6).map((item, index) => (
+              <div key={index} className="manga-wrapper">
+                <MangaCard manga={item} />
+              </div>
+            ))}
+          </div>
           </div>
         </div>
       </div>
