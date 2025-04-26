@@ -5,14 +5,15 @@ class FavoriteSerializer(serializers.ModelSerializer):
     class Meta:
         model = Favorite
         fields = [
-            'history_id',
+            'favorite_id',   # ✅ corrected field
             'user_id',
             'mal_id',
             'date',
         ]
-        read_only_fields = ['history_id', 'date']
+        read_only_fields = ['favorite_id', 'date']
         extra_kwargs = {
             'user_id': {'write_only': True},
             'mal_id': {'required': True, 'allow_blank': False},
         }
+
 from django.utils.translation import gettext_lazy as _
