@@ -1,0 +1,830 @@
+/* Profile variables - scoped to component instead of :root */
+.profileContainer {
+  /* Variables moved from :root to this container class */
+  --bg-primary: #0f0f0f;
+  --bg-secondary: #1c1c1c;
+  --bg-tertiary: #252525;
+  --bg-quaternary: #2a2a2a;
+  --text-primary: #ffffff;
+  --text-secondary: #e0e0e0;
+  --text-tertiary: #b0b0b0;
+  --accent-primary:  #ffb74d;;
+  --accent-secondary:  #ffb74d;;
+ --accent-gradient: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366);
+  --score-color: #ffb74d;
+  --error-color: #f44336;
+  --success-color: #66bb6a;
+  --border-radius-sm: 4px;
+  --border-radius-md: 8px;
+  --border-radius-lg: 12px;
+  --border-radius-xl: 20px;
+  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.2);
+  --shadow-md: 0 4px 15px rgba(0, 0, 0, 0.2);
+  --shadow-lg: 0 8px 20px rgba(0, 0, 0, 0.4);
+  --transition-fast: all 0.2s ease;
+  --transition-medium: all 0.3s ease;
+  --transition-slow: all 0.5s ease;
+
+  /* General styles */
+  min-height: 100vh;
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  padding-bottom: 2rem;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+}
+
+/* ===== PROFILE HEADER ===== */
+.profileHeader {
+  position: relative;
+  margin-bottom: 2.5rem;
+  overflow: hidden;
+}
+
+.profileBanner {
+  height: 180px;
+  background: linear-gradient(135deg, #f09433, #e6683c);
+  position: relative;
+  overflow: hidden;
+  box-shadow: var(--shadow-md);
+}
+
+.bannerOverlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(180deg, rgba(15, 15, 15, 0) 0%, rgba(15, 15, 15, 0.8) 80%, rgba(15, 15, 15, 1) 100%);
+}
+
+.profileHeaderContent {
+  display: flex;
+  align-items: center;
+  padding: 0 2rem;
+  margin-top: -60px;
+  position: relative;
+  z-index: 2;
+  max-width: 1200px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.profileAvatar {
+  width: 120px;
+  height: 120px;
+  background: var(--accent-gradient);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 3.5rem;
+  font-weight: bold;
+  color: var(--text-primary);
+  border: 4px solid var(--bg-primary);
+  box-shadow: var(--shadow-md);
+  transition: transform 0.3s ease;
+}
+
+.profileAvatar:hover {
+  transform: scale(1.05) rotate(5deg);
+}
+
+.profileUserInfo {
+  margin-left: 1.5rem;
+  padding-top: 60px;
+}
+
+.profileUserInfo h1 {
+  font-size: 2.2rem;
+  margin: 0;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+  background: var(--accent-gradient);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  display: inline-block;
+}
+
+.userLevel {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-top: 0.5rem;
+}
+
+.levelBadge {
+  background: linear-gradient(45deg, #ff9800, #f57c00);
+  color: white;
+  padding: 0.3rem 0.7rem;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.joinedDate {
+  color: var(--text-tertiary);
+  font-size: 0.95rem;
+  display: flex;
+  align-items: center;
+}
+
+.joinedDate::before {
+  content: "";
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  background-color: var(--accent-secondary);
+  border-radius: 50%;
+  margin-right: 8px;
+}
+
+/* ===== PROFILE CONTENT LAYOUT ===== */
+.profileContent {
+  display: grid;
+  grid-template-columns: 280px 1fr;
+  gap: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+
+/* ===== SIDEBAR ===== */
+.profileSidebar {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.profileDetailsCard,
+.profileStatsCard {
+  background-color: var(--bg-secondary);
+  border-radius: var(--border-radius-lg);
+  padding: 1.5rem;
+  box-shadow: var(--shadow-md);
+  transition: var(--transition-medium);
+}
+
+.profileDetailsCard:hover,
+.profileStatsCard:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--shadow-lg);
+}
+
+.profileDetailsCard h3,
+.profileStatsCard h3 {
+  margin-top: 0;
+  position: relative;
+  padding-bottom: 0.8rem;
+  margin-bottom: 1.2rem;
+  font-size: 1.2rem;
+  color: var(--accent-secondary);
+}
+
+.profileDetailsCard h3::after,
+.profileStatsCard h3::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 40px;
+  height: 3px;
+  background: var(--accent-gradient);
+  border-radius: 3px;
+}
+
+.profileDetailItem {
+  display: flex;
+  align-items: center;
+  margin-bottom: 1rem;
+  color: var(--text-secondary);
+  transition: var(--transition-fast);
+}
+
+.profileDetailItem:hover {
+  transform: translateX(5px);
+}
+
+.profileDetailItem :global(.material-symbols-outlined) {
+  margin-right: 12px;
+  color: var(--accent-secondary);
+  font-size: 20px;
+}
+
+/* Profile Actions */
+.profileActions {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+  margin-top: 1.5rem;
+  padding-top: 1.2rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.profileActionButton {
+  background-color: var(--bg-tertiary);
+  color: var(--text-secondary);
+  border: none;
+  border-radius: var(--border-radius-md);
+  padding: 0.7rem 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  cursor: pointer;
+  transition: var(--transition-fast);
+  font-weight: 500;
+  font-size: 0.9rem;
+}
+
+.profileActionButton:hover {
+  background-color: var(--accent-primary);
+  color: white;
+  transform: translateY(-2px);
+}
+
+.profileActionButton :global(.material-symbols-outlined) {
+  font-size: 18px;
+}
+
+/* Stats Grid */
+.statsGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.statItem {
+  background-color: var(--bg-tertiary);
+  border-radius: var(--border-radius-md);
+  padding: 1rem 0.8rem;
+  text-align: center;
+  transition: var(--transition-medium);
+}
+
+.statItem:hover {
+  background-color: var(--bg-quaternary);
+  transform: translateY(-3px);
+}
+
+.statValue {
+  display: block;
+  font-size: 1.8rem;
+  font-weight: bold;
+  background: var(--accent-gradient);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin-bottom: 0.3rem;
+}
+
+.statLabel {
+  font-size: 0.8rem;
+  color: var(--text-tertiary);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* Progress Bar */
+.statProgress {
+  margin-top: 1rem;
+}
+
+.progressInfo {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 0.5rem;
+  font-size: 0.85rem;
+  color: var(--text-tertiary);
+}
+
+.progressBar {
+  height: 6px;
+  background-color: var(--bg-tertiary);
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.progressFill {
+  height: 100%;
+  background: var(--accent-gradient);
+  width: 0;
+  transition: width 1s ease;
+}
+
+/* ===== MAIN CONTENT AREA ===== */
+.profileMainContent {
+  background-color: var(--bg-secondary);
+  border-radius: var(--border-radius-lg);
+  overflow: hidden;
+  box-shadow: var(--shadow-md);
+  min-height: 600px;
+  display: flex;
+  flex-direction: column;
+}
+
+/* New centered favorites heading */
+.contentTabsCenter {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 1rem 0;
+  background-color: var(--bg-tertiary);
+  border-bottom: 1px solid #333;
+}
+
+.favoritesHeading {
+  color: var(--accent-secondary);
+  font-size: 1.2rem;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding-bottom: 3px;
+  border-bottom: 3px solid var(--accent-primary);
+}
+
+.favoritesHeading :global(.material-symbols-outlined) {
+  font-size: 20px;
+}
+
+.tabContent {
+  padding: 2rem;
+  flex-grow: 1;
+}
+
+.sectionHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1.5rem;
+}
+
+.sectionTitle {
+  font-size: 1.5rem;
+  margin: 0;
+  color: var(--text-primary);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.sectionTitle :global(.material-symbols-outlined) {
+  color: var(--accent-secondary);
+}
+
+.countBadge {
+  font-size: 0.9rem;
+  background-color: var(--bg-tertiary);
+  color: var(--text-tertiary);
+  padding: 0.2rem 0.8rem;
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ===== MANGA GRID ===== */
+.mangaGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 1.2rem;
+}
+
+.mangaCard {
+  background-color: var(--bg-tertiary);
+  border-radius: var(--border-radius-md);
+  overflow: hidden;
+  cursor: pointer;
+  transition: var(--transition-medium);
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+.mangaCard:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--shadow-lg);
+}
+
+.mangaCover {
+  position: relative;
+  height: 240px;
+  overflow: hidden;
+}
+
+.mangaCover img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: var(--transition-slow);
+}
+
+.mangaCard:hover .mangaCover img {
+  transform: scale(1.08);
+}
+
+/* Modified manga badges for better visibility */
+.mangaBadges {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  z-index: 5; /* Increased z-index */
+}
+
+.badge {
+  background-color: rgba(0, 0, 0, 0.75); /* Darker background for better contrast */
+  color: white;
+  padding: 0.3rem 0.5rem; /* Slightly larger padding */
+  border-radius: var(--border-radius-sm);
+  font-size: 0.8rem; /* Slightly larger font */
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  font-weight: 500; /* Added font weight */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3); /* Added shadow for better visibility */
+}
+
+.scoreBadge {
+  background-color: rgba(255, 183, 77, 0.9); /* More opaque background */
+  color: #000; /* Dark text for contrast with yellow background */
+}
+
+.scoreBadge :global(.material-symbols-outlined) {
+  font-size: 16px;
+  color: #000; /* Ensuring icon is visible */
+}
+
+.mangaInfo {
+  padding: 1rem;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.mangaTitle {
+  font-size: 0.95rem;
+  margin: 0 0 0.6rem;
+  color: var(--text-primary);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  line-height: 1.3;
+}
+
+.mangaMeta {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.8rem;
+  color: var(--text-tertiary);
+  margin-bottom: 0.6rem;
+}
+
+.mangaType {
+  padding: 2px 6px;
+  background-color: var(--bg-quaternary);
+  border-radius: var(--border-radius-sm);
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.mangaChapters {
+  color: var(--text-tertiary);
+}
+
+.mangaGenres {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin-top: auto;
+  padding-top: 0.6rem;
+}
+
+.genreTag {
+  font-size: 0.7rem;
+  color: var(--accent-secondary);
+  background-color: rgba(33, 150, 243, 0.1);
+  padding: 2px 6px;
+  border-radius: var(--border-radius-sm);
+  transition: var(--transition-fast);
+}
+
+.mangaCard:hover .genreTag {
+  background-color: rgba(33, 150, 243, 0.2);
+}
+
+/* ===== EMPTY STATE ===== */
+.emptyState {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 300px;
+  text-align: center;
+  color: var(--text-tertiary);
+  padding: 2rem 1rem;
+}
+
+.emptyState :global(.material-symbols-outlined) {
+  font-size: 48px;
+  margin-bottom: 1rem;
+  color: var(--accent-secondary);
+}
+
+.emptyState h3 {
+  margin: 0 0 0.5rem;
+  color: var(--text-secondary);
+  font-size: 1.2rem;
+}
+
+.emptyState p {
+  margin: 0 0 1.5rem;
+  max-width: 300px;
+}
+
+.actionButton {
+  background: var(--accent-gradient);
+  color: white;
+  border: none;
+  border-radius: var(--border-radius-xl);
+  padding: 0.6rem 1.5rem;
+  margin-top: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: var(--transition-fast);
+}
+
+.actionButton:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(33, 150, 243, 0.4);
+}
+
+.retryButton {
+  background-color: rgba(244, 67, 54, 0.2);
+  color: var(--error-color);
+  border: 1px solid rgba(244, 67, 54, 0.3);
+  border-radius: var(--border-radius-md);
+  padding: 0.5rem 1rem;
+  margin-top: 1rem;
+  cursor: pointer;
+  transition: var(--transition-fast);
+}
+
+.retryButton:hover {
+  background-color: rgba(244, 67, 54, 0.3);
+}
+
+/* ===== LOADING SPINNER ===== */
+.loadingSpinner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 200px;
+}
+
+.spinner {
+  width: 40px;
+  height: 40px;
+  border: 3px solid rgba(33, 150, 243, 0.2);
+  border-top-color: var(--accent-primary);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+  margin-bottom: 1rem;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* ===== ERROR MESSAGE ===== */
+.errorMessage {
+  background-color: rgba(244, 67, 54, 0.1);
+  color: var(--error-color);
+  padding: 1.2rem;
+  border-radius: var(--border-radius-lg);
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.errorMessage :global(.material-symbols-outlined) {
+  font-size: 32px;
+  margin-bottom: 0.5rem;
+}
+
+.errorMessage p {
+  margin: 0 0 0.5rem;
+}
+
+/* ===== RESPONSIVE DESIGN ===== */
+@media (max-width: 992px) {
+  .profileContent {
+    grid-template-columns: 240px 1fr;
+    gap: 1.5rem;
+  }
+  
+  .mangaGrid {
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  }
+  
+  .mangaCover {
+    height: 220px;
+  }
+  
+  .profileHeaderContent {
+    padding: 0 1.5rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .profileContent {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+    padding: 0 1.2rem;
+  }
+  
+  .profileHeaderContent {
+    flex-direction: column;
+    text-align: center;
+    padding: 0 1rem;
+    margin-top: -70px;
+  }
+  
+  .profileAvatar {
+    width: 100px;
+    height: 100px;
+    font-size: 2.8rem;
+  }
+  
+  .profileUserInfo {
+    margin-left: 0;
+    padding-top: 1rem;
+  }
+  
+  .profileUserInfo h1 {
+    font-size: 1.8rem;
+  }
+  
+  .profileBanner {
+    height: 150px;
+  }
+  
+  .userLevel {
+    justify-content: center;
+  }
+  
+  /* Side-by-side sidebar cards on medium screens */
+  .profileSidebar {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.2rem;
+  }
+  
+  .tabContent {
+    padding: 1.5rem;
+  }
+  
+  .mangaGrid {
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    gap: 1rem;
+  }
+  
+  .mangaCover {
+    height: 190px;
+  }
+  
+  .profileDetailsCard h3::after,
+  .profileStatsCard h3::after {
+    left: 50%;
+    transform: translateX(-50%);
+  }
+  
+  .profileDetailsCard h3,
+  .profileStatsCard h3 {
+    text-align: center;
+  }
+}
+
+@media (max-width: 576px) {
+  .profileSidebar {
+    grid-template-columns: 1fr;
+  }
+  
+  .profileAvatar {
+    width: 90px;
+    height: 90px;
+    font-size: 2.5rem;
+    border-width: 3px;
+  }
+  
+  .profileBanner {
+    height: 120px;
+  }
+  
+  .profileHeaderContent {
+    margin-top: -50px;
+  }
+  
+  .favoritesHeading {
+    padding: 0.8rem 0;
+    font-size: 1rem;
+  }
+  
+  .favoritesHeading :global(.material-symbols-outlined) {
+    font-size: 18px;
+  }
+  
+  .sectionTitle {
+    font-size: 1.2rem;
+  }
+  
+  .mangaGrid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.8rem;
+  }
+  
+  .mangaCover {
+    height: 180px;
+  }
+  
+  .mangaInfo {
+    padding: 0.8rem;
+  }
+  
+  .mangaTitle {
+    font-size: 0.85rem;
+  }
+  
+  .contentTabsCenter {
+    overflow-x: auto;
+    white-space: nowrap;
+  }
+  
+  .statsGrid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 400px) {
+  .profileBanner {
+    height: 100px;
+  }
+  
+  .profileContent {
+    padding: 0 0.8rem;
+  }
+  
+  .profileAvatar {
+    width: 80px;
+    height: 80px;
+    font-size: 2.2rem;
+  }
+  
+  .profileUserInfo h1 {
+    font-size: 1.5rem;
+  }
+  
+  .mangaCover {
+    height: 150px;
+  }
+  
+  .tabContent {
+    padding: 1.2rem 0.8rem;
+  }
+  
+  .mangaBadges .badge {
+    font-size: 0.75rem;
+  }
+  
+  .mangaInfo {
+    padding: 0.6rem;
+  }
+  
+  .statValue {
+    font-size: 1.5rem;
+  }
+  
+  .levelBadge {
+    font-size: 0.75rem;
+    padding: 0.2rem 0.6rem;
+  }
+  
+  .joinedDate {
+    font-size: 0.85rem;
+  }
+}
+
+/* Define the animation keyframes here */
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}

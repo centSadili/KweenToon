@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import TitleHeader from '../custom/TitleHeader';
 import axios from 'axios';
-import "../styles/Profile.css";
+import styles from "../styles/Profile.module.css"; // Changed to CSS module
 
 const Profile = () => {
   TitleHeader("Profile");
@@ -15,7 +15,8 @@ const Profile = () => {
   const [mangaDetails, setMangaDetails] = useState({});
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [activeTab, setActiveTab] = useState('favorites');
+  
+  // Removed activeTab since we're only showing favorites now
 
   useEffect(() => {
     if (!user) {
@@ -46,12 +47,19 @@ const Profile = () => {
   const fetchMangaDetails = async (favorites) => {
     try {
       const mangaData = {};
-      for (const favorite of favorites) {
-        const response = await axios.get(`http://127.0.0.1:8000/api/manga/getbyid/?id=${favorite.mal_id}`);
-        if (response.status === 200) {
-          mangaData[favorite.mal_id] = response.data;
+      // Use Promise.all for parallel requests to improve performance
+      const promises = favorites.map(async (favorite) => {
+        try {
+          const response = await axios.get(`http://127.0.0.1:8000/api/manga/getbyid/?id=${favorite.mal_id}`);
+          if (response.status === 200) {
+            mangaData[favorite.mal_id] = response.data;
+          }
+        } catch (err) {
+          console.error(`Error fetching details for manga ID ${favorite.mal_id}:`, err);
         }
-      }
+      });
+      
+      await Promise.all(promises);
       setMangaDetails(mangaData);
     } catch (error) {
       console.error("Error fetching manga details:", error);
@@ -87,166 +95,171 @@ const Profile = () => {
     ? Math.floor((new Date() - new Date(user.date_joined)) / (1000 * 60 * 60 * 24))
     : 0;
 
+  // User level based on favorites count
+  const getUserLevel = (count) => {
+    if (count >= 50) return "Manga Master";
+    if (count >= 20) return "Avid Reader";
+    if (count >= 10) return "Manga Enthusiast";
+    if (count >= 5) return "Regular Reader";
+    return "Casual Reader";
+  };
+
   return (
-    <div className="profile-container">
-      <div className="profile-header">
-        <div className="profile-banner">
-          <div className="banner-overlay"></div>
+    <div className={styles.profileContainer}>
+      <div className={styles.profileHeader}>
+        <div className={styles.profileBanner}>
+          <div className={styles.bannerOverlay}></div>
         </div>
-        <div className="profile-header-content">
-          <div className="profile-avatar">
+        <div className={styles.profileHeaderContent}>
+          <div className={styles.profileAvatar}>
             {user.username.charAt(0).toUpperCase()}
           </div>
-          <div className="profile-user-info">
+          <div className={styles.profileUserInfo}>
             <h1>{user.username}</h1>
-            <p className="joined-date">Joined {registrationDate}</p>
+            <div className={styles.userLevel}>
+              <span className={styles.levelBadge}>{getUserLevel(totalFavorites)}</span>
+              <span className={styles.joinedDate}>Member since {registrationDate}</span>
+            </div>
           </div>
         </div>
       </div>
 
-      <div className="profile-content">
-        <div className="profile-sidebar">
-          <div className="profile-details-card">
+      <div className={styles.profileContent}>
+        <div className={styles.profileSidebar}>
+          <div className={styles.profileDetailsCard}>
             <h3>Profile Details</h3>
-            <div className="profile-detail-item">
+            <div className={styles.profileDetailItem}>
               <span className="material-symbols-outlined">mail</span>
               <span>{user.email}</span>
             </div>
-            <div className="profile-detail-item">
+            <div className={styles.profileDetailItem}>
               <span className="material-symbols-outlined">calendar_today</span>
               <span>Member for {memberDays} days</span>
             </div>
-            <div className="profile-bio">
-              <h4>About Me</h4>
-              <p>{user.bio || "No bio yet. Tell us about yourself!"}</p>
+            <div className={styles.profileActions}>
+              <button className={styles.profileActionButton} onClick={() => navigate("/mylist")}>
+                <span className="material-symbols-outlined">bookmarks</span>
+                My List
+              </button>
+              <button className={styles.profileActionButton} onClick={() => navigate("/myhistory")}>
+                <span className="material-symbols-outlined">history</span>
+                History
+              </button>
             </div>
           </div>
           
-          <div className="profile-stats-card">
+          <div className={styles.profileStatsCard}>
             <h3>Stats</h3>
-            <div className="stats-grid">
-              <div className="stat-item">
-                <span className="stat-value">{totalFavorites}</span>
-                <span className="stat-label">Favorites</span>
+            <div className={styles.statsGrid}>
+              <div className={styles.statItem}>
+                <span className={styles.statValue}>{totalFavorites}</span>
+                <span className={styles.statLabel}>Favorites</span>
               </div>
-              <div className="stat-item">
-                <span className="stat-value">0</span>
-                <span className="stat-label">Completed</span>
+              <div className={styles.statItem}>
+                <span className={styles.statValue}>{memberDays}</span>
+                <span className={styles.statLabel}>Days</span>
+              </div>
+            </div>
+            <div className={styles.statProgress}>
+              <div className={styles.progressInfo}>
+                <span>Level Progress</span>
+                <span>{totalFavorites}/50</span>
+              </div>
+              <div className={styles.progressBar}>
+                <div 
+                  className={styles.progressFill} 
+                  style={{ width: `${Math.min(totalFavorites/50*100, 100)}%` }}
+                ></div>
               </div>
             </div>
           </div>
         </div>
 
-        <div className="profile-main-content">
-          <div className="content-tabs">
-            <button 
-              className={`tab-button ${activeTab === 'favorites' ? 'active' : ''}`}
-              onClick={() => setActiveTab('favorites')}
-            >
+        <div className={styles.profileMainContent}>
+          {/* Changed from button tabs to centered heading */}
+          <div className={styles.contentTabsCenter}>
+            <div className={styles.favoritesHeading}>
               <span className="material-symbols-outlined">favorite</span>
               Favorites
-            </button>
-            <button 
-              className={`tab-button ${activeTab === 'completed' ? 'active' : ''}`}
-              onClick={() => setActiveTab('completed')}
-            >
-              <span className="material-symbols-outlined">check_circle</span>
-              Completed
-            </button>
+            </div>
           </div>
 
-          <div className="tab-content">
-            {activeTab === 'favorites' && (
-              <>
-                <h2 className="section-title">
-                  <span className="material-symbols-outlined">favorite</span>
-                  My Favorite Manga
-                  <span className="count-badge">{uniqueFavorites.length}</span>
-                </h2>
-                {isLoading ? (
-                  <div className="loading-spinner">
-                    <div className="spinner"></div>
-                    <p>Loading favorites...</p>
-                  </div>
-                ) : error ? (
-                  <div className="error-message">
-                    <span className="material-symbols-outlined">error</span>
-                    {error}
-                  </div>
-                ) : uniqueFavorites.length === 0 ? (
-                  <div className="empty-state">
-                    <span className="material-symbols-outlined">favorite_border</span>
-                    <p>You haven't added any favorites yet.</p>
-                    <button className="action-button" onClick={() => navigate('/home')}>
-                      Browse Manga
-                    </button>
-                  </div>
-                ) : (
-                  <div className="manga-grid">
-                    {uniqueFavorites.map((favorite) => {
-                      const manga = mangaDetails[favorite.mal_id];
-                      if (!manga) return null;
-                      
-                      return (
-                        <div 
-                          key={favorite.favorite_id} 
-                          className="manga-card"
-                          onClick={() => navigate(`/manga/${manga.mal_id}`)}
-                        >
-                          <div className="manga-cover">
-                            <img
-                              src={manga.images?.jpg?.image_url || "default-image.jpg"}
-                              alt={manga.title}
-                              loading="lazy"
-                            />
-                            <div className="manga-badges">
-                              {manga.score && (
-                                <span className="badge score-badge">
-                                  <span className="material-symbols-outlined">star</span>
-                                  {manga.score}
-                                </span>
-                              )}
-                            </div>
-                          </div>
-                          <div className="manga-info">
-                            <h3 className="manga-title">{manga.title}</h3>
-                            <div className="manga-meta">
-                              <span className="manga-type">{manga.type || "Manga"}</span>
-                              {manga.chapters && (
-                                <span className="manga-chapters">{manga.chapters} ch</span>
-                              )}
-                            </div>
-                            <div className="manga-genres">
-                              {manga.genres?.slice(0, 2).map(genre => (
-                                <span key={genre.mal_id} className="genre-tag">{genre.name}</span>
-                              ))}
-                            </div>
-                          </div>
-                        </div>
-                      );
-                    })}
-                  </div>
-                )}
-              </>
-            )}
-
-            {activeTab === 'reading' && (
-              <div className="empty-state">
-                <span className="material-symbols-outlined">book_2</span>
-                <p>You're not currently reading any manga.</p>
-                <button className="action-button" onClick={() => navigate('/home')}>
-                  Find Something to Read
+          <div className={styles.tabContent}>
+            <div className={styles.sectionHeader}>
+              <h2 className={styles.sectionTitle}>
+                <span className="material-symbols-outlined">favorite</span>
+                My Favorite Manga
+              </h2>
+              <span className={styles.countBadge}>{uniqueFavorites.length}</span>
+            </div>
+            
+            {isLoading ? (
+              <div className={styles.loadingSpinner}>
+                <div className={styles.spinner}></div>
+                <p>Loading favorites...</p>
+              </div>
+            ) : error ? (
+              <div className={styles.errorMessage}>
+                <span className="material-symbols-outlined">error</span>
+                <p>{error}</p>
+                <button className={styles.retryButton} onClick={fetchFavorites}>
+                  Try Again
                 </button>
               </div>
-            )}
-
-            {activeTab === 'completed' && (
-              <div className="empty-state">
-                <span className="material-symbols-outlined">check_circle</span>
-                <p>You haven't completed any manga yet.</p>
-                <button className="action-button" onClick={() => navigate('/home')}>
+            ) : uniqueFavorites.length === 0 ? (
+              <div className={styles.emptyState}>
+                <span className="material-symbols-outlined">favorite_border</span>
+                <h3>No favorites yet</h3>
+                <p>Start adding manga to your favorites to see them here</p>
+                <button className={styles.actionButton} onClick={() => navigate('/MainHome')}>
                   Browse Manga
                 </button>
+              </div>
+            ) : (
+              <div className={styles.mangaGrid}>
+                {uniqueFavorites.map((favorite) => {
+                  const manga = mangaDetails[favorite.mal_id];
+                  if (!manga) return null;
+                  
+                  return (
+                    <div 
+                      key={favorite.favorite_id} 
+                      className={styles.mangaCard}
+                      onClick={() => navigate(`/manga/${manga.mal_id}`)}
+                    >
+                      <div className={styles.mangaCover}>
+                        <img
+                          src={manga.images?.jpg?.image_url || "default-image.jpg"}
+                          alt={manga.title}
+                          loading="lazy"
+                        />
+                        {/* Moved badges outside the image for better visibility */}
+                        <div className={styles.mangaBadges}>
+                          {manga.score && (
+                            <span className={`${styles.badge} ${styles.scoreBadge}`}>
+                              <span className="material-symbols-outlined">star</span>
+                              {manga.score}
+                            </span>
+                          )}
+                        </div>
+                      </div>
+                      <div className={styles.mangaInfo}>
+                        <h3 className={styles.mangaTitle}>{manga.title}</h3>
+                        <div className={styles.mangaMeta}>
+                          <span className={styles.mangaType}>{manga.type || "Manga"}</span>
+                          {manga.chapters && (
+                            <span className={styles.mangaChapters}>{manga.chapters} ch</span>
+                          )}
+                        </div>
+                        <div className={styles.mangaGenres}>
+                          {manga.genres?.slice(0, 2).map(genre => (
+                            <span key={genre.mal_id} className={styles.genreTag}>{genre.name}</span>
+                          ))}
+                        </div>
+                      </div>
+                    </div>
+                  );
+                })}
               </div>
             )}
           </div>

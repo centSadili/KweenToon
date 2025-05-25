@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import TitleHeader from '../custom/TitleHeader';
 import axios from 'axios';
-import "../styles/MyList.css"; // You can create this CSS file or use Profile.css
+import "../styles/MyList.css";
 
 const MyList = () => {
   TitleHeader("My List");
@@ -19,6 +19,7 @@ const MyList = () => {
   const [error, setError] = useState(null);
   const [activeTab, setActiveTab] = useState('all');
   const [filterType, setFilterType] = useState('');
+  const [deletingItemIds, setDeletingItemIds] = useState([]);
 
   useEffect(() => {
     if (!user) {
@@ -64,50 +65,73 @@ const MyList = () => {
     }
   };
 
-  const handleRemoveFavorite = async (favoriteId) => {
-    try {
-      setIsLoading(true);
-      const response = await axios.delete(`http://127.0.0.1:8000/api/favorite/${favoriteId}/`);
-      if (response.status === 204) {
-        // Successfully deleted
-        setFavorites(favorites.filter(fav => fav.favorite_id !== favoriteId));
-        // No need to refetch all manga details as we're just removing one
-      } else {
-        setError("Failed to remove from list");
-      }
-    } catch (error) {
-      console.error("Error removing from list:", error);
-      setError("Error removing from list");
-    } finally {
-      setIsLoading(false);
+ const handleRemoveFavorite = async (favoriteId) => {
+  try {
+    // Add this ID to the deleting items
+    setDeletingItemIds(prev => [...prev, favoriteId]);
+    
+    console.log(`Attempting to delete favorite with ID: ${favoriteId}`);
+    
+    const response = await axios.delete(`http://127.0.0.1:8000/api/favorite/${favoriteId}/`);
+    console.log('Delete response:', response);
+    
+    if (response.status === 204) {
+      console.log('Successfully deleted favorite');
+      // Update the favorites state to remove the deleted item
+      setFavorites(prevFavorites => 
+        prevFavorites.filter(fav => fav.favorite_id !== favoriteId)
+      );
+    } else {
+      console.error('Unexpected status code:', response.status);
+      setError("Failed to remove from list");
     }
-  };
-
-  if (!user) {
-    return null;
+  } catch (error) {
+    console.error("Error removing from list:", error);
+    // Show more detailed error information
+    if (error.response) {
+      console.error("Error data:", error.response.data);
+      console.error("Error status:", error.response.status);
+      console.error("Error headers:", error.response.headers);
+      setError(`Error ${error.response.status}: ${JSON.stringify(error.response.data)}`);
+    } else if (error.request) {
+      console.error("No response received:", error.request);
+      setError("Server did not respond. Please try again later.");
+    } else {
+      console.error("Request setup error:", error.message);
+      setError(`Request error: ${error.message}`);
+    }
+  } finally {
+    // Remove this ID from the deleting items
+    setDeletingItemIds(prev => prev.filter(id => id !== favoriteId));
   }
-
-  // Get unique favorites by mal_id, sorted by date
-  const uniqueFavorites = favorites
-    .sort((a, b) => new Date(b.date) - new Date(a.date))
-    .filter((favorite, index, self) => 
-      index === self.findIndex((f) => f.mal_id === favorite.mal_id)
-    );
+};
+  // Use useMemo to calculate uniqueFavorites and filteredFavorites
+  const uniqueFavorites = useMemo(() => {
+    return favorites
+      .sort((a, b) => new Date(b.date) - new Date(a.date))
+      .filter((favorite, index, self) => 
+        index === self.findIndex((f) => f.mal_id === favorite.mal_id)
+      );
+  }, [favorites]); // Only recalculate when favorites changes
 
   // Filter by type if selected
-  const filteredFavorites = filterType 
-    ? uniqueFavorites.filter(favorite => {
-        const manga = mangaDetails[favorite.mal_id];
-        return manga && manga.type === filterType;
-      })
-    : uniqueFavorites;
+  const filteredFavorites = useMemo(() => {
+    return filterType 
+      ? uniqueFavorites.filter(favorite => {
+          const manga = mangaDetails[favorite.mal_id];
+          return manga && manga.type === filterType;
+        })
+      : uniqueFavorites;
+  }, [uniqueFavorites, mangaDetails, filterType]); // Recalculate when dependencies change
 
   // Get manga types for filter options
-  const mangaTypes = [...new Set(
-    Object.values(mangaDetails)
-      .filter(manga => manga && manga.type)
-      .map(manga => manga.type)
-  )];
+  const mangaTypes = useMemo(() => {
+    return [...new Set(
+      Object.values(mangaDetails)
+        .filter(manga => manga && manga.type)
+        .map(manga => manga.type)
+    )];
+  }, [mangaDetails]);
 
   return (
     <div className="mylist-container">
@@ -135,7 +159,10 @@ const MyList = () => {
             <div className="error-state">
               <span className="material-symbols-outlined">error</span>
               <p>{error}</p>
-              <button className="action-button" onClick={() => fetchFavorites()}>
+              <button className="action-button" onClick={() => {
+                setError(null);
+                fetchFavorites();
+              }}>
                 Try Again
               </button>
             </div>
@@ -210,7 +237,13 @@ const MyList = () => {
                         </p>
                       </div>
                       <div className="manga-list-actions">
-                        <button className="action-icon-button remove-button" onClick={() => handleRemoveFavorite(favorite.favorite_id)}>
+                        <button 
+                          className="action-icon-button remove-button" 
+                          onClick={(e) => {
+                            e.stopPropagation(); // Prevent navigation when clicking delete
+                            handleRemoveFavorite(favorite.favorite_id);
+                          }}
+                        >
                           <span className="material-symbols-outlined">delete</span>
                         </button>
                       </div>
