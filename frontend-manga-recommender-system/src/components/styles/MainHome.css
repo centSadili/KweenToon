@@ -1,6 +1,7 @@
 /* Main Layout */
 .main-home-layout {
-  display: flex;
+  display: grid;
+  grid-template-columns: 220px 1fr 220px;
   gap: 2rem;
   padding: 1.5rem;
   color: #fff;
@@ -11,12 +12,13 @@
 
 /* Genre Sidebar */
 .genre-section {
-  width: 220px;
-  height: 820px;
   background: #1e1e1e;
   padding: 1rem;
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  height: fit-content;
+  position: sticky;
+  top: 1.5rem;
 }
 
 .genre-section h3 {
@@ -31,6 +33,18 @@
   list-style: none;
   padding: 0;
   margin-bottom: 1.5rem;
+  max-height: 300px;
+  overflow-y: auto;
+  scrollbar-width: thin;
+}
+
+.genre-list::-webkit-scrollbar {
+  width: 5px;
+}
+
+.genre-list::-webkit-scrollbar-thumb {
+  background-color: #444;
+  border-radius: 5px;
 }
 
 .genre-list li {
@@ -42,6 +56,8 @@
   text-decoration: none;
   font-size: 0.95rem;
   transition: color 0.2s ease;
+  display: block;
+  padding: 4px 0;
 }
 
 .genre-list a:hover {
@@ -50,7 +66,7 @@
 
 /* Manga Feed */
 .manga-feed-section {
-  flex: 1;
+  min-width: 0; /* Prevents grid item from overflowing */
 }
 
 .feed-title {
@@ -74,11 +90,14 @@
   text-align: center;
   transition: all 0.3s ease;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+  text-decoration: none;
+  display: flex;
+  flex-direction: column;
 }
 
 .manga-card:hover {
-  transform: scale(1.05);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.6);
+  transform: translateY(-5px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.6);
 }
 
 .manga-card img {
@@ -89,34 +108,45 @@
 }
 
 .manga-card h4 {
-  margin-top: 0.5rem;
+  margin-top: 0.8rem;
   font-size: 0.95rem;
   color: #e0e0e0;
+  /* Prevent long titles from breaking layout */
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
 }
 
 /* See More Button */
 .see-more-top {
   margin-top: 1.5rem;
+  margin-bottom: 1.5rem;
   color: #64b5f6;
   cursor: pointer;
   font-weight: bold;
   text-align: center;
-  font-size: 0.95rem;
-  transition: color 0.2s ease;
+  padding: 10px;
+  border: 1px solid #2196f3;
+  border-radius: 5px;
+  transition: all 0.2s ease;
 }
 
 .see-more-top:hover {
-  text-decoration: underline;
-  color: #42a5f5;
+  background-color: #2196f3;
+  color: #fff;
 }
 
 /* Top Manga Sidebar */
 .top-manga-section.small {
-  width: 220px;
   background: #1e1e1e;
   padding: 1rem;
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  height: fit-content;
+  position: sticky;
+  top: 1.5rem;
 }
 
 .top-title {
@@ -130,12 +160,31 @@
   list-style: none;
   padding: 0;
   margin: 0;
+  max-height: 600px;
+  overflow-y: auto;
+  scrollbar-width: thin;
+}
+
+.top-manga-list.small-list::-webkit-scrollbar {
+  width: 5px;
+}
+
+.top-manga-list.small-list::-webkit-scrollbar-thumb {
+  background-color: #444;
+  border-radius: 5px;
 }
 
 .top-manga-item.small-item {
   display: flex;
   align-items: center;
   margin-bottom: 1rem;
+  padding: 5px;
+  border-radius: 5px;
+  transition: background-color 0.2s;
+}
+
+.top-manga-item.small-item:hover {
+  background-color: #2a2a2a;
 }
 
 .top-manga-item img {
@@ -151,4 +200,184 @@
   color: #e0e0e0;
   flex: 1;
   line-height: 1.2;
+  /* Prevent long titles from breaking layout */
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+
+/* Mobile Top Manga */
+.mobile-top-manga {
+  margin-top: 2rem;
+}
+
+/* Genre Toggle Button for Mobile */
+.genre-toggle {
+  display: none;
+  background-color: #2196f3;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  padding: 10px 15px;
+  margin-bottom: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+  width: 100%;
+  text-align: center;
+}
+
+/* Media Queries for Responsiveness */
+@media (max-width: 1200px) {
+  .main-home-layout {
+    grid-template-columns: 180px 1fr 180px;
+    gap: 1rem;
+    padding: 1rem;
+  }
+}
+
+@media (max-width: 992px) {
+  .main-home-layout {
+    grid-template-columns: 160px 1fr;
+    gap: 1rem;
+  }
+  
+  .top-manga-section.small {
+    display: none; /* Hide top manga on medium screens */
+  }
+  
+  .manga-card img {
+    height: 200px;
+  }
+}
+
+@media (max-width: 768px) {
+  .main-home-layout {
+    grid-template-columns: 1fr;
+    padding: 0.8rem;
+  }
+  
+  .genre-section {
+    position: relative;
+    top: 0;
+    margin-bottom: 1rem;
+    max-height: none;
+  }
+  
+  .genre-toggle {
+    display: block;
+  }
+  
+  .genre-content {
+    display: none;
+  }
+  
+  .genre-content.open {
+    display: block;
+  }
+  
+  .genre-list {
+    display: flex;
+    flex-wrap: wrap;
+    overflow-x: auto;
+    max-height: none;
+    padding-bottom: 0.5rem;
+    gap: 0.5rem;
+  }
+  
+  .genre-list li {
+    margin-bottom: 0;
+  }
+  
+  .genre-list a {
+    padding: 5px 12px;
+    border-radius: 15px;
+    background-color: #2a2a2a;
+    white-space: nowrap;
+  }
+  
+  .manga-grid {
+    grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+    gap: 0.8rem;
+  }
+  
+  .manga-card img {
+    height: 180px;
+  }
+  
+  /* Enhanced mobile layout for top manga */
+  .mobile-top-manga .manga-grid {
+    grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+  }
+}
+
+@media (max-width: 480px) {
+  .main-home-layout {
+    padding: 0.5rem;
+  }
+  
+  .genre-section h3 {
+    font-size: 1.1rem;
+  }
+  
+  .feed-title {
+    font-size: 1.3rem;
+  }
+  
+  .manga-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.6rem;
+  }
+  
+  .manga-card {
+    padding: 0.5rem;
+  }
+  
+  .manga-card img {
+    height: 160px;
+  }
+  
+  .manga-card h4 {
+    font-size: 0.8rem;
+    margin-top: 0.5rem;
+  }
+  
+  .genre-list a {
+    font-size: 0.85rem;
+    padding: 4px 10px;
+  }
+  
+  .see-more-top {
+    padding: 8px;
+    font-size: 0.9rem;
+  }
+}
+
+@media (max-width: 360px) {
+  .manga-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.5rem;
+  }
+  
+  .manga-card img {
+    height: 140px;
+  }
+  
+  .manga-card h4 {
+    font-size: 0.75rem;
+  }
+  
+  .feed-title {
+    font-size: 1.1rem;
+  }
+  
+  .genre-list {
+    gap: 0.3rem;
+  }
+  
+  .genre-list a {
+    padding: 3px 8px;
+    font-size: 0.8rem;
+  }
 }
