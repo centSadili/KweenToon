@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import "../styles/MyHistory.css"; 
+import "../styles/MyHistory.css";
 
 const MyHistory = () => {
   const [myList, setMyList] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
   const [user] = useState(() => {
     const storedUser = localStorage.getItem("user");
     return storedUser ? JSON.parse(storedUser) : null;
@@ -13,6 +14,7 @@ const MyHistory = () => {
   useEffect(() => {
     const fetchHistoryList = async () => {
       try {
+        setLoading(true);
         const response = await axios.get("http://localhost:8000/api/history/");
         const history = response.data;
     
@@ -25,12 +27,16 @@ const MyHistory = () => {
         );
     
         const mangaResponses = await Promise.all(mangaPromises);
-        const fullMangaList = mangaResponses.map((res) => res.data);
+        const fullMangaList = mangaResponses.map((res, index) => ({
+          ...res.data,
+          viewedDate: sortedHistory[index].date // Add the date from history
+        }));
     
         setMyList(fullMangaList);
-        setLoading(false);
       } catch (error) {
         console.error("Failed to fetch history:", error);
+        setError("Failed to load your history. Please try again later.");
+      } finally {
         setLoading(false);
       }
     };
@@ -38,31 +44,78 @@ const MyHistory = () => {
     fetchHistoryList();
   }, []);
 
+  const formatDate = (dateString) => {
+    const options = { year: 'numeric', month: 'short', day: 'numeric' };
+    return new Date(dateString).toLocaleDateString(undefined, options);
+  };
+
   if (loading) {
     return (
-      <div className="mylist-loader">
+      <div className="history-loader">
         <div className="spinner"></div>
         <p>Loading your history...</p>
       </div>
     );
   }
 
+  if (error) {
+    return (
+      <div className="history-error">
+        <span className="material-symbols-outlined">error</span>
+        <p>{error}</p>
+      </div>
+    );
+  }
+
   return (
-    <div className="mylist-container">
-      <h2>My History</h2>
+    <div className="history-container">
+      <div className="history-header">
+        <h1>My Reading History</h1>
+        <p className="history-subtitle">
+          {myList.length > 0 
+            ? `You have viewed ${myList.length} manga titles` 
+            : "Your history is empty"}
+        </p>
+      </div>
+      
       {myList.length === 0 ? (
-        <div className="empty-mylist">
-          <span className="material-symbols-outlined" style={{ fontSize: "48px", color: "#ccc" }}>
-            playlist_remove
+        <div className="empty-history">
+          <span className="material-symbols-outlined history-icon">
+            history_toggle_off
           </span>
-          <p>Your history is empty.</p>
+          <p>You haven't viewed any manga yet.</p>
+          <a href="/home" className="browse-button">Browse Manga</a>
         </div>
       ) : (
-        <div className="mylist-content">
+        <div className="history-content">
           {myList.map((item, index) => (
-            <div key={index} className="mylist-item">
-              <h3>{item.title}</h3>
-              <img src={item.images?.jpg?.image_url} alt={item.title} />
+            <div key={`${item.mal_id}-${index}`} className="history-card">
+              <div className="history-card-image">
+                <img 
+                  src={item.images?.jpg?.image_url || 'https://via.placeholder.com/150x225?text=No+Image'} 
+                  alt={item.title} 
+                  loading="lazy" 
+                />
+              </div>
+              <div className="history-card-details">
+                <h3>{item.title}</h3>
+                <div className="history-card-info">
+                  <span className="history-card-date">
+                    <span className="material-symbols-outlined">calendar_today</span>
+                    {formatDate(item.viewedDate)}
+                  </span>
+                  {item.score && (
+                    <span className="history-card-score">
+                      <span className="material-symbols-outlined">star</span>
+                      {item.score}
+                    </span>
+                  )}
+                </div>
+                <p className="history-card-genre">
+                  {item.genres?.slice(0, 3).map(genre => genre.name).join(', ')}
+                </p>
+                <a href={`/manga/${item.mal_id}`} className="view-button">View Again</a>
+              </div>
             </div>
           ))}
         </div>
