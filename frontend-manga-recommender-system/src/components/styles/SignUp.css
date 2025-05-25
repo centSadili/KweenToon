@@ -45,7 +45,7 @@ body {
   
   .signup-box button {
     padding: 10px;
-    background-color: #6c63ff;
+    background-color:  #ffb74d;;
     color: white;
     border: none;
     border-radius: 5px;
@@ -55,7 +55,7 @@ body {
   }
   
   .signup-box button:hover {
-    background-color: #554cd4;
+    background-color:  #f09433;
   }
   
   .signup-box p {
@@ -65,7 +65,7 @@ body {
   }
   
   .signup-box a {
-    color: #6c63ff;
+    color: #f09433;
     text-decoration: none;
   }
   
