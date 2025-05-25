@@ -22,3 +22,10 @@ def get_favorite(request):
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+def delete_favorite(request, pk):
+    try:
+        favorite = Favorite.objects.get(pk=pk)
+        favorite.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
+    except Favorite.DoesNotExist:
+        return Response({"error": "Favorite not found"}, status=status.HTTP_404_NOT_FOUND)
