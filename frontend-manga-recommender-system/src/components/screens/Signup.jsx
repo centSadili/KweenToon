@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import axios from 'axios';
 import '../styles/Signup.css';
 import TitleHeader from "../custom/TitleHeader";
+import {useNavigate} from 'react-router-dom';
 
 const Signup = () => {
   TitleHeader('Sign Up');
@@ -24,6 +25,8 @@ const Signup = () => {
   
   // Success state
   const [isSuccess, setIsSuccess] = useState(false);
+  
+  const navigate = useNavigate();
 
   // Validation functions
   const validateEmail = (email) => {
@@ -199,7 +202,7 @@ const Signup = () => {
         
         // Redirect after short delay
         setTimeout(() => {
-          window.location.href = "/";
+           navigate("/");
         }, 1500);
       }
       

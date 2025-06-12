@@ -132,7 +132,7 @@ const Header = () => {
               <div className="dropdown-menu">
                 <div
                   className="dropdown-item"
-                  onClick={() => handleNavigate("/home")}
+                  onClick={() => handleNavigate("/MainHome")}
                 >
                   <span className="material-symbols-outlined">home</span>
                   <span>Home</span>
