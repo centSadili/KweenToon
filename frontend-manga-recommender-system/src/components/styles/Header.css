@@ -641,3 +641,68 @@
     padding: 0.3rem 0.6rem;
   }
 }
+
+/* Add these new styles to ensure the search dropdown displays correctly */
+.search-bar-wrapper {
+  position: relative;
+  width: 100%;
+  max-width: 400px;
+}
+
+.search-dropdown-list {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  background-color: white;
+  border-radius: 0 0 8px 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  max-height: 300px;
+  overflow-y: auto;
+  margin-top: 2px;
+  padding: 8px 0;
+  display: block;
+}
+
+.search-container-desktop {
+  position: relative;
+  z-index: 900;
+}
+
+.search-container-mobile {
+  position: relative;
+  z-index: 900;
+  width: 100%;
+  margin-top: 15px;
+}
+
+.nav-menu {
+  z-index: 800;
+}
+
+.user-menu {
+  position: relative;
+  z-index: 950;
+}
+
+.dropdown-menu {
+  z-index: 1000;
+}
+
+.search-dropdown-item {
+  padding: 10px 15px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: background-color 0.2s;
+}
+
+.search-dropdown-item:hover {
+  background-color: #f5f5f5;
+}
+
+.book-icon {
+  font-size: 16px;
+}

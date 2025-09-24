@@ -11,20 +11,29 @@ const Footer = () => {
         <div className="footer-column brand-column">
           <h2 className="footer-logo">Kwentoon</h2>
           <p className="tagline">Connect. Create. Storytell.</p>
-          <div className="social-icons">
-            <a href="#" className="social-icon" aria-label="Facebook">
-              <i className="fab fa-facebook-f"></i>
-            </a>
-            <a href="#" className="social-icon" aria-label="Instagram">
-              <i className="fab fa-instagram"></i>
-            </a>
-            <a href="#" className="social-icon" aria-label="Twitter">
-              <i className="fab fa-twitter"></i>
-            </a>
-            <a href="#" className="social-icon" aria-label="TikTok">
-              <i className="fab fa-tiktok"></i>
-            </a>
-          </div>
+<div className="social-icons">
+  <a href="#" className="social-icon" aria-label="Facebook">
+     <img 
+      src="https://cdn-icons-png.flaticon.com/128/2175/2175193.png" 
+      alt="Facebook" 
+      style={{ width: '16px', height: '16px' }} 
+    />
+  </a>
+  <a href="#" className="social-icon" aria-label="Instagram">
+     <img 
+      src="https://cdn-icons-png.flaticon.com/128/2168/2168336.png" 
+      alt="Instagram" 
+      style={{ width: '16px', height: '16px' }} 
+    />
+  </a>
+  <a href="#" className="social-icon" aria-label="Instagram">
+    <img 
+      src="https://cdn-icons-png.flaticon.com/128/87/87390.png" 
+      alt="Instagram" 
+      style={{ width: '16px', height: '16px' }} 
+    />
+  </a>
+</div>
         </div>
 
         {/* Column 2: Collabs/Sponsors */}

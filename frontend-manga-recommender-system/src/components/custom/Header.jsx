@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import "../styles/Header.css";
 import { useLocation, useNavigate } from "react-router-dom";
-import MangaSearchBar from "./MangaSearchBAr";
+import MangaSearchBar from "./MangaSearchBar";
 import { useAuth } from "../../context/AuthContext";
 
 const Header = () => {
@@ -9,10 +9,6 @@ const Header = () => {
   const location = useLocation();
   const [isOpen, setIsOpen] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const [query, setQuery] = useState("");
-  const [results, setResults] = useState([]);
-  const [showDropdown, setShowDropdown] = useState(false);
-  const [loading, setLoading] = useState(false);
   const { user, setUser, setIsLoggedIn } = useAuth();
   const dropdownRef = useRef(null);
   const mobileMenuRef = useRef(null);
@@ -55,33 +51,6 @@ const Header = () => {
     setIsOpen(false);
   };
 
-  useEffect(() => {
-    const fetchResults = async () => {
-      if (!query.trim()) {
-        setResults([]);
-        return;
-      }
-
-      setLoading(true);
-      try {
-        const res = await fetch(
-          `/manga/search_manga/?q=${encodeURIComponent(query)}&limit=5`
-        );
-        const data = await res.json();
-        setResults(data);
-        setShowDropdown(true);
-      } catch (err) {
-        console.error("Failed to fetch:", err);
-        setResults([]);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    const debounce = setTimeout(fetchResults, 400); // Delay typing
-    return () => clearTimeout(debounce); // Clean up
-  }, [query]);
-
   // Close dropdowns when clicking outside
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -98,11 +67,6 @@ const Header = () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, []);
-
-  const handleSelect = (title) => {
-    setQuery(title);
-    setShowDropdown(false);
-  };
 
   return (
     <header className="header">
@@ -145,38 +109,12 @@ const Header = () => {
             </ul>
             
             <div className="search-container-mobile">
-              <MangaSearchBar query={query} setQuery={setQuery} />
-              {showDropdown && results.length > 0 && (
-                <ul className="search-dropdown">
-                  {results.map((manga) => (
-                    <li
-                      key={manga.mal_id}
-                      onClick={() => handleSelect(manga.title)}
-                      className="search-dropdown-item"
-                    >
-                      {manga.title}
-                    </li>
-                  ))}
-                </ul>
-              )}
+              <MangaSearchBar />
             </div>
           </div>
 
           <div className="search-container-desktop">
-            <MangaSearchBar query={query} setQuery={setQuery} />
-            {showDropdown && results.length > 0 && (
-              <ul className="search-dropdown">
-                {results.map((manga) => (
-                  <li
-                    key={manga.mal_id}
-                    onClick={() => handleSelect(manga.title)}
-                    className="search-dropdown-item"
-                  >
-                    {manga.title}
-                  </li>
-                ))}
-              </ul>
-            )}
+            <MangaSearchBar />
           </div>
 
           <div className="user-menu" ref={dropdownRef}>
@@ -194,7 +132,7 @@ const Header = () => {
               <div className="dropdown-menu">
                 <div
                   className="dropdown-item"
-                  onClick={() => handleNavigate("/home")}
+                  onClick={() => handleNavigate("/MainHome")}
                 >
                   <span className="material-symbols-outlined">home</span>
                   <span>Home</span>
